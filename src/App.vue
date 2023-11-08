@@ -21,7 +21,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #2e7d5a;
 }
 
 .footer, .header, .sideBox, .about, .content{
