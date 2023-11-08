@@ -28,11 +28,17 @@ export default createStore({
   },
   mutations: {
     updatePosts (state, posts) {
-      console.log(posts)
       state.posts = posts
     },
     increaseLikes (state, id) {
       state.posts[id].likes += 1
+    },
+    resetLikes (state) {
+      let i = 0
+      while (i < state.posts.length) {
+        state.posts[i].likes = 0
+        i++
+      }
     }
   },
   actions: {
@@ -52,6 +58,9 @@ export default createStore({
     },
     increaseLikesAct ({ commit }, id) {
       this.commit('increaseLikes', id)
+    },
+    resetLikesAct ({ commit }) {
+      this.commit('resetLikes')
     }
   },
   modules: {

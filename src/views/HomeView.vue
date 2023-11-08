@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <button id=resetLikes>Reset likes</button>
+      <button id=resetLikes @click="resetLikes()">Reset likes</button>
     </div>
     <div class="sideBox"></div>
   </div>
@@ -60,6 +60,9 @@ export default {
   methods: {
     increaseLikes (id) {
       this.$store.dispatch('increaseLikesAct', id)
+    },
+    resetLikes () {
+      this.$store.dispatch('resetLikesAct')
     }
   }
 }
