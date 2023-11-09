@@ -7,6 +7,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
+npx json-server --watch Data/posts.json
 npm run serve
 ```
 
