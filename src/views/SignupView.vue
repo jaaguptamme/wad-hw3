@@ -1,7 +1,7 @@
 <template>
   <header-comp></header-comp>
   <div class="content">
-        <form action="index.html" @submit.prevent="validatePassword">
+        <form action="index.html" @submit="validatePassword" method="get">
           <div class="form">
             <div class="inputs">
               <label for="email">Email</label>
@@ -36,11 +36,31 @@ export default {
     }
   },
   methods: {
-    validatePassword () {
+    validatePassword (e) {
       if (this.password.length > 15) {
         this.passwordError = 'Length of password over 15 characters'
+        e.preventDefault()
+      } else if (this.password.length < 8) {
+        this.passwordError = 'Length of password less than 8 characters'
+        e.preventDefault()
+      } else if (!/[A-Z]/.test(this.password)) {
+        this.passwordError = 'Password must contain at least one uppercase letter'
+        e.preventDefault()
+      } else if (!/[a-z]{2,}/.test(this.password)) {
+        this.passwordError = 'Password must contain at least two lowercase letter'
+        e.preventDefault()
+      } else if (!/\d+/.test(this.password)) {
+        this.passwordError = 'Password must contain at least one number'
+        e.preventDefault()
+      } else if (!/^[A-Z].*/.test(this.password)) {
+        this.passwordError = 'Password must begin with an uppercase letter'
+        e.preventDefault()
+      } else if (!/.*_.*/.test(this.password)) {
+        this.passwordError = 'Password must contain "_" symbol'
+        e.preventDefault()
       } else {
         this.passwordError = ''
+        return true
       }
     }
   }
