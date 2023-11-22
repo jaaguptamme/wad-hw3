@@ -9,7 +9,12 @@
               <label for="password">Password</label>
               <input type="password" placeholder="Password" name="password" required v-model="password">
             </div>
-            <div v-if="passwordError" class="passwordError">{{passwordError}}</div>
+            <div v-if="passwordErrors.length != 0" class="passwordError">
+              <p>Password is not valid because:</p>
+              <p v-for="passwordError in passwordErrors" :key="passwordError">
+                {{passwordError}}
+              </p>
+              </div>
           <input id="signupButton" type="submit" value="Signup">
           </div>
         </form>
@@ -32,34 +37,35 @@ export default {
     return {
       email: '',
       password: '',
-      passwordError: ''
+      passwordErrors: []
     }
   },
   methods: {
     validatePassword (e) {
+      this.passwordErrors = []
       if (this.password.length > 15) {
-        this.passwordError = 'Length of password over 15 characters'
+        this.passwordErrors.push('Length of password over 15 characters')
         e.preventDefault()
-      } else if (this.password.length < 8) {
-        this.passwordError = 'Length of password less than 8 characters'
+      } if (this.password.length < 8) {
+        this.passwordErrors.push('Length of password less than 8 characters')
         e.preventDefault()
-      } else if (!/[A-Z]/.test(this.password)) {
-        this.passwordError = 'Password must contain at least one uppercase letter'
+      } if (!/[A-Z]/.test(this.password)) {
+        this.passwordErrors.push('Password must contain at least one uppercase letter')
         e.preventDefault()
-      } else if (!/[a-z]{2,}/.test(this.password)) {
-        this.passwordError = 'Password must contain at least two lowercase letter'
+      } if (!/[a-z].*[a-z]/.test(this.password)) {
+        this.passwordErrors.push('Password must contain at least two lowercase letters')
         e.preventDefault()
-      } else if (!/\d+/.test(this.password)) {
-        this.passwordError = 'Password must contain at least one number'
+      } if (!/\d+/.test(this.password)) {
+        this.passwordErrors.push('Password must contain at least one number')
         e.preventDefault()
-      } else if (!/^[A-Z].*/.test(this.password)) {
-        this.passwordError = 'Password must begin with an uppercase letter'
+      } if (!/^[A-Z].*/.test(this.password)) {
+        this.passwordErrors.push('Password must begin with an uppercase letter')
         e.preventDefault()
-      } else if (!/.*_.*/.test(this.password)) {
-        this.passwordError = 'Password must contain "_" symbol'
+      } if (!/.*_.*/.test(this.password)) {
+        this.passwordErrors.push('Password must contain "_" symbol')
         e.preventDefault()
-      } else {
-        this.passwordError = ''
+      }
+      if (this.passwordErrors === []) {
         return true
       }
     }
